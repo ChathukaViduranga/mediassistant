@@ -34,17 +34,20 @@ function Dashboard() {
     document.body.removeChild(link);
   }
 
-  async function readImages() {
-    const file = document.getElementById("picture") as HTMLInputElement;
-
-    const selectedFiles = await file?.files;
+  async function readImages(): Promise<string[]> {
+    const fileInput = document.getElementById("picture") as HTMLInputElement;
+    const selectedFiles = fileInput?.files;
 
     if (selectedFiles) {
-      const readFile = async (file: File) => {
+      const readFile = async (file: File): Promise<string> => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = (e) => {
-            resolve(e.target.result);
+            if (e.target?.result) {
+              resolve(e.target.result as string);
+            } else {
+              reject("File read error");
+            }
           };
           reader.onerror = (error) => {
             reject(error);
@@ -53,17 +56,14 @@ function Dashboard() {
         });
       };
 
-      const readAllFiles = async () => {
-        try {
-          const promises = Array.from(selectedFiles).map(readFile);
-          const results = await Promise.all(promises);
-
-          return results;
-        } catch (error) {}
-      };
-
-      const ims = await readAllFiles();
-      return ims;
+      try {
+        const promises = Array.from(selectedFiles).map(readFile);
+        const results = await Promise.all(promises);
+        return results;
+      } catch (error) {
+        console.error("Error reading files", error);
+        return [];
+      }
     } else {
       return [];
     }
