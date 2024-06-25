@@ -35,7 +35,7 @@ function Dashboard() {
   }
 
   async function readImages() {
-    const file = document.getElementById("picture");
+    const file = document.getElementById("picture") as HTMLInputElement;
 
     const selectedFiles = await file?.files;
 
