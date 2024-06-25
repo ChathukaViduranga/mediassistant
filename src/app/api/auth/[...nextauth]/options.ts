@@ -1,5 +1,6 @@
 import { NextAuthOptions, CallbacksOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { redirect } from "next/navigation";
 
 const googleID = process.env.GOOGLE_CLIENT_ID!;
 const googleSecret = process.env.GOOGLE_CLIENT_SECRET!;
@@ -35,6 +36,12 @@ export const options: NextAuthOptions = {
         // Or you can return a URL to redirect to:
         // return '/unauthorized'
       }
+    },
+  },
+  events: {
+    async signOut({ token, session }) {
+      // Redirect to the home page after sign out
+      return redirect("/");
     },
   },
 };
