@@ -40,7 +40,7 @@ function Dashboard() {
     const selectedFiles = await file?.files;
 
     if (selectedFiles) {
-      const readFile = async (file) => {
+      const readFile = async (file: File) => {
         return new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = (e) => {
