@@ -27,7 +27,8 @@ export const options: NextAuthOptions = {
       if (
         user.email == "chathuka.viduranga.bc@gmail.com" ||
         user.email == "roshansamarathunga27@gmail.com" ||
-        user.email == "janudkumarasinghe@gmail.com"
+        user.email == "janudkumarasinghe@gmail.com" ||
+        user.email == "miyurulakshan.bc@gmail.com"
       ) {
         return true;
       } else {
